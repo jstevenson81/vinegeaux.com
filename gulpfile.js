@@ -1,9 +1,8 @@
-/// <vs SolutionOpened='default' />
 // Include Gulp
 var gulp = require('gulp');
 // Include plugins
 var $ = require('gulp-load-plugins')({
-    pattern: ['gulp-*', 'gulp.*', 'main-bower-files', 'del', 'yargs'],
+    pattern: ['gulp-*', 'gulp.*', 'main-bower-files', 'del', 'yargs', 'vinyl-paths'],
     replaceString: /\bgulp[\-.]/
 });
 // config
@@ -46,10 +45,12 @@ gulp.task('compile-bootswatch-less', ['copy-fonts'], function () {
     gulp
         .src(config.bootstrapThemeSrc + config.lessFilter)
         .pipe($.less())
-        .pipe($.autoprefixer({ browsers: ['last 2 versions', '> 5%'] }))
+        .pipe($.autoprefixer({ browsers: ['last 2 versions', '> 5%', 'IE 8'] }))
         .pipe(gulp.dest(config.cssDest))
         .pipe($.if($.yargs.argv.verbose, $.print()));
 });
+
+
 
 gulp.task('copy-scripts', ['compile-bootswatch-less'], function () {
     gulp
@@ -62,9 +63,26 @@ gulp.task('copy-scripts', ['compile-bootswatch-less'], function () {
 // deafult task
 gulp.task('default', ['copy-scripts']);
 
+// utils
+gulp.task('cleanTSJS', function () {
+    gulp
+        .src(config.appDest + '**/*.js')
+        .pipe($.vinylPaths($.del))
+        .pipe($.print());
+});
+
+gulp.task('watchIrisLess', function () {
+    gulp
+        .src(config.bootstrapThemeSrc + 'iris.less')
+        .pipe($.watch(config.bootstrapThemeSrc + 'iris.less'))
+        .pipe($.less())
+        .pipe($.autoprefixer({ browsers: ['last 2 versions', '> 5%', 'IE 8'] }))
+        .pipe(gulp.dest(config.cssDest));
+});
+
 ///////////////////
 function log(msg) {
-    if (typeof(msg) === 'object') {
+    if (typeof (msg) === 'object') {
         for (var item in msg) {
             if (msg.hasOwnProperty(item)) {
                 $.util.log($.util.colors.blue(msg[item]));
