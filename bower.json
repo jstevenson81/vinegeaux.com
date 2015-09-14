@@ -1,0 +1,31 @@
+{
+  "name": "vinegeaux.com",
+  "version": "1.0.0",
+  "homepage": "https://github.com/jstevenson81/vinegeaux.com",
+  "authors": [
+    "Jonathan Stevenson <jstevenson@retinalscreenings.com>"
+  ],
+  "description": "a place for non-wine people to learn about wines",
+  "main": "index.htm",
+  "keywords": [
+    "wine",
+    "vinegeaux"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.5",
+    "angular-animate": "~1.4.5",
+    "angular-cookies": "~1.4.5",
+    "angular-route": "~1.4.5",
+    "angular-sanitize": "~1.4.5",
+    "bootstrap": "~3.3.5",
+    "jquery": "~2.1.4"
+  }
+}
